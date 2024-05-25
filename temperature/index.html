@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 Sensor Data</title>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('https://api.github.com/repos/devadityaraj/temperature/contents/data.json');
+                const data = await response.json();
+                const content = atob(data.content);
+                const sensorData = JSON.parse(content);
+                document.getElementById('temperature').innerText = sensorData.temperature + ' °C';
+                document.getElementById('humidity').innerText = sensorData.humidity + ' %';
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        setInterval(fetchData, 5000); // Fetch data every 5 seconds
+        window.onload = fetchData;
+    </script>
+</head>
+<body>
+    <h1>ESP8266 Sensor Data</h1>
+    <p>Temperature: <span id="temperature">Loading...</span></p>
+    <p>Humidity: <span id="humidity">Loading...</span></p>
+</body>
+</html>
