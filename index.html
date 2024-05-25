@@ -1,0 +1,72 @@
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature and Humidity Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin-top: 50px;
+    }
+    #data-container {
+      margin-top: 20px;
+    }
+    p {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Temperature and Humidity Monitor</h1>
+  <div id="data-container">
+    <p id="temperature">Temperature: Loading...</p>
+    <p id="humidity">Humidity: Loading...</p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script>
+
+    var firebaseConfig = {
+      apiKey: "AIzaSyBvXip_P6i4NSTpx03L2gQW6Nc0sWUKUH8",
+      authDomain: "room-temp-esp.firebaseapp.com",
+      databaseURL: "https://room-temp-esp-default-rtdb.firebaseio.com",
+      projectId: "room-temp-esp",
+      storageBucket: "room-temp-esp.appspot.com",
+      messagingSenderId: "557086048022",
+      appId: "1:557086048022:web:ed5750630c1839afae1a37"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    var database = firebase.database();
+
+    function fetchData() {
+      var ref = database.ref("DHT");
+      ref.on("value", function(snapshot) {
+        var data = snapshot.val();
+        if (data) {
+          document.getElementById("temperature").innerText = "Temperature: " + data.temperature + "°C";
+          document.getElementById("humidity").innerText = "Humidity: " + data.humidity + "%";
+        } else {
+          document.getElementById("temperature").innerText = "Temperature: No data";
+          document.getElementById("humidity").innerText = "Humidity: No data";
+        }
+      }, function (error) {
+        console.log("Error: " + error.code);
+      });
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>
