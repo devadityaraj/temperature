@@ -194,10 +194,7 @@ button:hover span {
 </head>
 <body>
 
-    <audio autoplay loop>
-        <source src="music1.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+  <iframe width="0" height="0" src="https://youtu.be/VsOykR7cj_g?si=6X-8v37zsnOD4SOw?autoplay=1&t=22" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     
     <label class="switch">
         <input type="checkbox" id="modeSwitch" onclick="toggleDarkMode()">
@@ -274,7 +271,8 @@ button:hover span {
             if (modeSwitch.checked) {
                 window.location.href = "https://youtu.be/BBJa32lCaaY";
             } else {
-                
+                  var iframe = document.querySelector('iframe');
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
             }
         }
     </script>
