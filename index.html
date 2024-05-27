@@ -194,10 +194,9 @@ button:hover span {
 </head>
 <body>
 
-<audio autoplay>
-    <source src="music1.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
+<audio id="audioPlayer" src="your_audio_file.mp3" loop></audio>
+
+    
     <label class="switch">
         <input type="checkbox" id="modeSwitch" onclick="toggleDarkMode()">
         <span class="slider"></span>
@@ -254,6 +253,7 @@ button:hover span {
     <script>
         const storedId = "hot";
         const storedPassword = "2024"; 
+         const audioPlayer = document.getElementById('audioPlayer');
 
         function checkCredentials() {
             const inputId = document.getElementById('userId').value;
@@ -271,7 +271,7 @@ button:hover span {
             const modeSwitch = document.getElementById('modeSwitch');
 
             if (modeSwitch.checked) {
-                window.location.href = "https://youtu.be/BBJa32lCaaY";
+               audioPlayer.play();
             } else {
                   var iframe = document.querySelector('iframe');
         iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
