@@ -38,6 +38,56 @@
             color: #e0e0e0;
             border-radius: 5px;
         }
+
+
+        .button1 {
+  cursor: pointer;
+  position: fixed;
+  padding: 8px 8px;
+  top: 20px;
+  right: 20px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(242, 242, 242);
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.button1::before {
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  cursor: pointer;
+  transition: 1s;
+}
+
+.button1:hover::before {
+  scale: 3;
+}
+
+.button1:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(193, 163, 98,0.4);
+}
+
+.button1:active {
+  scale: 1;
+}
+
+
         button {
   display: flex;
   align-items: center;
@@ -149,58 +199,17 @@ button:hover span {
             width: 0;
             height: 0;
         }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
         
     </style>
 </head>
 <body>
 
-<audio id="audioPlayer" src="your_audio_file.mp3" loop></audio>
+<audio id="audioPlayer" src="music1.mp3" loop></audio>
 
     
-    <label class="switch">
-        <input type="checkbox" id="modeSwitch" onclick="toggleDarkMode()">
-        <span class="slider"></span>
-    </label>
+<button class="button1" onclick="playAudio()">
+    Music
+  </button>
 
     <div id="login">
         <h2>Login</h2>
@@ -253,7 +262,7 @@ button:hover span {
     <script>
         const storedId = "hot";
         const storedPassword = "2024"; 
-         const audioPlayer = document.getElementById('audioPlayer');
+         var audioPlayer = document.getElementById('audioPlayer');
 
         function checkCredentials() {
             const inputId = document.getElementById('userId').value;
@@ -266,17 +275,12 @@ button:hover span {
                 message.textContent = "Get Lost";
             }
         }
-        function toggleDarkMode() {
-            const body = document.body;
-            const modeSwitch = document.getElementById('modeSwitch');
+        
+        
+    function playAudio() {
+        audioPlayer.play();
+    }
 
-            if (modeSwitch.checked) {
-               audioPlayer.play();
-            } else {
-                  var iframe = document.querySelector('iframe');
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            }
-        }
     </script>
 </body>
 </html>
