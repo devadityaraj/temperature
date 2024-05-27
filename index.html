@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID and Password Protected Page - Dark Mode with Stars and Planets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        #login {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+        #login input {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            box-sizing: border-box;
+            background: #333;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            border-radius: 5px;
+        }
+        #login button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #login button:hover {
+            background-color: #3700b3;
+        }
+        #message {
+            color: #cf6679;
+        }
+        .star, .planet {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white;
+            animation: shoot 2s linear infinite;
+        }
+        .star {
+            width: 2px;
+            height: 2px;
+            background: white;
+        }
+        .planet {
+            background: linear-gradient(to right, #ff6e7f, #bfe9ff);
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 0 30px #ff6e7f, 0 0 60px #ff6e7f, 0 0 90px #bfe9ff;
+            animation: orbit 10s linear infinite;
+        }
+        .star:nth-child(n+2):nth-child(-n+21) { /* Target first 20 stars */
+            animation-delay: calc(var(--i) * 0.1s);
+            top: calc(var(--i) * 5%);
+            left: calc(var(--i) * 5%);
+        }
+        .planet:nth-child(22) { top: 20%; left: 10%; animation-delay: 2s; }
+        .planet:nth-child(23) { top: 60%; left: 70%; animation-delay: 6s; }
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(-200px) translateY(-200px) scale(0.5);
+                opacity: 0;
+            }
+        }
+        @keyframes orbit {
+            0% {
+                transform: translateX(0) translateY(0) scale(1);
+            }
+            50% {
+                transform: translateX(50px) translateY(50px) scale(1.2);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scale(1);
+            }
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at cursor, rgba(255, 255, 255, 0.5), transparent 50%);
+            mix-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body>
+    <div id="login">
+        <h2>Login</h2>
+        <input type="text" id="userId" placeholder="User ID">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="checkCredentials()">Submit</button>
+        <p id="message"></p>
+    </div>
+
+    <!-- Adding 20 more stars -->
+    <div class="star" style="--i:1;"></div>
+    <div class="star" style="--i:2;"></div>
+    <div class="star" style="--i:3;"></div>
+    <div class="star" style="--i:4;"></div>
+    <div class="star" style="--i:5;"></div>
+    <div class="star" style="--i:6;"></div>
+    <div class="star" style="--i:7;"></div>
+    <div class="star" style="--i:8;"></div>
+    <div class="star" style="--i:9;"></div>
+    <div class="star" style="--i:10;"></div>
+    <div class="star" style="--i:11;"></div>
+    <div class="star" style="--i:12;"></div>
+    <div class="star" style="--i:13;"></div>
+    <div class="star" style="--i:14;"></div>
+    <div class="star" style="--i:15;"></div>
+    <div class="star" style="--i:16;"></div>
+    <div class="star" style="--i:17;"></div>
+    <div class="star" style="--i:18;"></div>
+    <div class="star" style="--i:19;"></div>
+    <div class="star" style="--i:20;"></div>
+    <div class="star" style="--i:21;"></div>
+    <div class="planet"></div>
+    <div class="planet"></div>
+
+    <script>
+        const storedId = "hot"; // Set your user ID here
+        const storedPassword = "2024"; // Set your password here
+
+        function checkCredentials() {
+            const inputId = document.getElementById('userId').value;
+            const inputPassword = document.getElementById('password').value;
+            const message = document.getElementById('message');
+
+            if (inputId === storedId && inputPassword === storedPassword) {
+                window.location.href = "data.html"; // Set your target URL here
+            } else {
+                message.textContent = "You should convert back to Sp*rm";
+            }
+        }
+    </script>
+</body>
+</html>
