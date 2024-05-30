@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading</title>
+<style>
+body, html {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  color: black;
+  background-color: black; 
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+}
+
+.shape {
+  --BG-COLOR: #59d5e0;
+  --OUTLINE-COLOR: #068b97;
+  --OUTLINE-SIZE: 15px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: var(--OUTLINE-SIZE) solid var(--OUTLINE-COLOR);
+  background: var(--BG-COLOR);
+  box-shadow: 0px 0px calc(var(--OUTLINE-SIZE) + 25px) rgba(0, 0, 0, 0.438);
+  animation: morph 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.numRowContainer {
+  height: fit-content;
+  animation: infiniteScroll 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+@keyframes infiniteScroll {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -30%);
+  }
+}
+
+@keyframes morph {
+  50% {
+    --BG-COLOR: PINK;
+    --OUTLINE-COLOR: #ff407d;
+    transform: rotate(150deg);
+    border-radius: 20%;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<div class="loader">
+  <div class="shape">
+    <div class="numRowContainer">
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+      <div class="numRow"> A D I T Y A </div>
+    </div>
+  </div>
+</div>
+
+<script>
+setTimeout(function() {
+  window.location.href = "login.html";
+}, 6500); 
+</script>
+
+</body>
+</html>
