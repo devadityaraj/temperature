@@ -1,2 +1,0 @@
-temperature 100
-humidity 60
