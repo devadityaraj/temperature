@@ -506,8 +506,6 @@ button:hover span {
     <div class="planet"></div>
 
     <script>
-        const storedId = "hot";
-        const storedPassword = "2024"; 
          var audioPlayer = document.getElementById('audioPlayer');
 
         function checkCredentials() {
@@ -515,14 +513,19 @@ button:hover span {
             const inputPassword = document.getElementById('password').value;
             const message = document.getElementById('message');
 
-            if (inputId === storedId && inputPassword === storedPassword) {
+            if (inputId === "one" && inputPassword === "temperature") {
                 window.location.href = "data.html";
-            } else {
-                message.textContent = "Get Lost";
             }
-		 if (inputId === "newui" && inputPassword === storedPassword) {
+		 if (inputId === "two" && inputPassword === "temperature") {
                 window.location.href = "data2.html";
-            } else {
+            }
+		 if (inputId === "three" && inputPassword === "temperature") {
+                window.location.href = "data3.html";
+            }
+			 if (inputId === "suprise" && inputPassword === "bonus") {
+                window.location.href = "https://www.youtube.com/watch?v=hPkwZ9tzL90";
+            }
+		 else {
                 message.textContent = "Get Lost";
             }
         }
