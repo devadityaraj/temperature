@@ -2,6 +2,7 @@
     <head>
         <title>ESP Temp Monitor</title>
         <style>
+
 html,
 body {
   height:100vh;
@@ -9,8 +10,11 @@ body {
   justify-content:center;
   font-family:arial;
   display: grid;
-  color: white;
-  background: black;
+  overflow: hidden;
+  display: flex;
+  align-content: center;
+  cursor: url('cursor.svg'), default;
+  background-image: radial-gradient(ellipse farthest-corner at center top, hsla(230, 100%, 15%, 1) 0%, hsla(231, 90%, 1%, 1) 100%);
  }
 
  *{
@@ -18,6 +22,7 @@ body {
   margin:0;
   padding:0;
 }
+
 
 .cardm {
   position: absolute;
@@ -145,23 +150,22 @@ body {
   border-bottom-right-radius: 35px;
   background: limegreen;
   transition: .4s ease-in-out;
+  
 }
-
-
 
 
         </style>
     </head>
 <body>
- 
-  <div id="tsparticles"></div>
+  <canvas id="canv"></canvas> 
 
     <div class="cardm">
         <div class="card">
           <svg class="weather" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" xml:space="preserve">  <image id="image0" width="100" height="100" x="0" y="0" href="data:image/png;base64,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"></image>
           </svg>
-          <div class="main"><p id="temperature"> </p></div>
           <div class="mainsub">My Room </div>
+          <div class="main"><p id="temperature"></p></div>
+          
       
         </div>
 
@@ -294,6 +298,7 @@ body {
       </div>
 
 
+
  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -330,47 +335,293 @@ body {
    }
   fetchData();
 
-  const options = {
-  interactivity: {
-    events: {
-      onClick: {
-        enable: true,
-        mode: "push"
-      },
-      onHover: {
-        enable: true,
-        mode: "repulse"
-      }
-    },
-    modes: {
-      push: {
-        quantity: 3
-      },
-      repulse: {
-        distance: 100
-      }
-    }
-  },
-  particles: {
-    links: {
-      enable: flase, // this enables links between particles
-      opacity: 0.3,
-      distance: 190
-    },
-    move: {
-      enable: true
-    },
-    opacity: {
-      value: { min: 0.5, max: 0.7 }
-    },
-    size: {
-      value: { min: 1, max: 1 }
-    }
+
+  var num = 200;
+var w = window.innerWidth;
+var h = window.innerHeight;
+var max = 100;
+var _x = 0;
+var _y = 0;
+var _z = 150;
+var dtr = function(d) {
+  return d * Math.PI / 180;
+};
+
+var rnd = function() {
+  return Math.sin(Math.floor(Math.random() * 360) * Math.PI / 180);
+};
+var dist = function(p1, p2, p3) {
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2) + Math.pow(p2.z - p1.z, 2));
+};
+
+var cam = {
+  obj: { x: _x,y: _y, z: _z},
+  dest: {x: 0, y: 0,z: 1},
+  dist: {x: 0,y: 0,z: 200},
+  ang: {cplane: 0,splane: 0,ctheta: 0,stheta: 0},
+  zoom: 1,
+  disp: {x: w / 2,y: h / 2,z: 0},
+  upd: function() {
+    cam.dist.x = cam.dest.x - cam.obj.x;
+    cam.dist.y = cam.dest.y - cam.obj.y;
+    cam.dist.z = cam.dest.z - cam.obj.z;
+    cam.ang.cplane = -cam.dist.z / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
+    cam.ang.splane = cam.dist.x / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
+    cam.ang.ctheta = Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z) / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.y * cam.dist.y + cam.dist.z * cam.dist.z);
+    cam.ang.stheta = -cam.dist.y / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.y * cam.dist.y + cam.dist.z * cam.dist.z);
   }
 };
-tsParticles.load("tsparticles", options);
 
-  
- </script>
+var trans = {
+  parts: {
+    sz: function(p, sz) {
+      return {
+        x: p.x * sz.x,
+        y: p.y * sz.y,
+        z: p.z * sz.z
+      };
+    },
+    rot: {
+      x: function(p, rot) {
+        return {
+          x: p.x,
+          y: p.y * Math.cos(dtr(rot.x)) - p.z * Math.sin(dtr(rot.x)),
+          z: p.y * Math.sin(dtr(rot.x)) + p.z * Math.cos(dtr(rot.x))
+        };
+      },
+      y: function(p, rot) {
+        return {
+          x: p.x * Math.cos(dtr(rot.y)) + p.z * Math.sin(dtr(rot.y)),
+          y: p.y,
+          z: -p.x * Math.sin(dtr(rot.y)) + p.z * Math.cos(dtr(rot.y))
+        };
+      },
+      z: function(p, rot) {
+        return {
+          x: p.x * Math.cos(dtr(rot.z)) - p.y * Math.sin(dtr(rot.z)),
+          y: p.x * Math.sin(dtr(rot.z)) + p.y * Math.cos(dtr(rot.z)),
+          z: p.z
+        };
+      }
+    },
+    pos: function(p, pos) {
+      return {
+        x: p.x + pos.x,
+        y: p.y + pos.y,
+        z: p.z + pos.z
+      };
+    }
+  },
+  pov: {
+    plane: function(p) {
+      return {
+        x: p.x * cam.ang.cplane + p.z * cam.ang.splane,
+        y: p.y,
+        z: p.x * -cam.ang.splane + p.z * cam.ang.cplane
+      };
+    },
+    theta: function(p) {
+      return {
+        x: p.x,
+        y: p.y * cam.ang.ctheta - p.z * cam.ang.stheta,
+        z: p.y * cam.ang.stheta + p.z * cam.ang.ctheta
+      };
+    },
+    set: function(p) {
+      return {
+        x: p.x - cam.obj.x,
+        y: p.y - cam.obj.y,
+        z: p.z - cam.obj.z
+      };
+    }
+  },
+  persp: function(p) {
+    return {
+      x: p.x * cam.dist.z / p.z * cam.zoom,
+      y: p.y * cam.dist.z / p.z * cam.zoom,
+      z: p.z * cam.zoom,
+      p: cam.dist.z / p.z
+    };
+  },
+  disp: function(p, disp) {
+    return {
+      x: p.x + disp.x,
+      y: -p.y + disp.y,
+      z: p.z + disp.z,
+      p: p.p
+    };
+  },
+  steps: function(_obj_, sz, rot, pos, disp) {
+    var _args = trans.parts.sz(_obj_, sz);
+    _args = trans.parts.rot.x(_args, rot);
+    _args = trans.parts.rot.y(_args, rot);
+    _args = trans.parts.rot.z(_args, rot);
+    _args = trans.parts.pos(_args, pos);
+    _args = trans.pov.plane(_args);
+    _args = trans.pov.theta(_args);
+    _args = trans.pov.set(_args);
+    _args = trans.persp(_args);
+    _args = trans.disp(_args, disp);
+    return _args;
+  }
+};
+
+(function() {
+  "use strict";
+  var threeD = function(param) {
+    this.transIn = {};
+    this.transOut = {};
+    this.transIn.vtx = (param.vtx);
+    this.transIn.sz = (param.sz);
+    this.transIn.rot = (param.rot);
+    this.transIn.pos = (param.pos);
+  };
+
+  threeD.prototype.vupd = function() {
+    this.transOut = trans.steps(
+      this.transIn.vtx,
+      this.transIn.sz,
+      this.transIn.rot,
+      this.transIn.pos,
+      cam.disp
+    );
+  };
+
+  var Build = function() {
+    this.vel = 0.04;
+    this.lim = 360;
+    this.diff = 200;
+    this.initPos = 100;
+    this.toX = _x;
+    this.toY = _y;
+    this.go();
+  };
+
+  Build.prototype.go = function() {
+    this.canvas = document.getElementById("canv");
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.$ = canv.getContext("2d");
+    this.$.globalCompositeOperation = 'source-over';
+    this.varr = [];
+    this.dist = [];
+    this.calc = [];
+
+    for (var i = 0, len = num; i < len; i++) {
+      this.add();
+    }
+
+    this.rotObj = {x: 0,y: 0,z: 0};
+    this.objSz = {x: w / 5,y: h / 5,z: w / 5};
+  };
+
+  Build.prototype.add = function() {
+    this.varr.push(new threeD({
+      vtx: {x: rnd(),y: rnd(),z: rnd()},
+      sz: {x: 0,y: 0,z: 0},
+      rot: {x: 20,y: -20,z: 0},
+      pos: {
+        x: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
+        y: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
+        z: this.diff * Math.sin(360 * Math.random() * Math.PI / 180)
+      }
+    }));
+    this.calc.push({
+      x: 360 * Math.random(),
+      y: 360 * Math.random(),
+      z: 360 * Math.random()
+    });
+  };
+
+  Build.prototype.upd = function() {
+    cam.obj.x += (this.toX - cam.obj.x) * 0.05;
+    cam.obj.y += (this.toY - cam.obj.y) * 0.05;
+  };
+
+  Build.prototype.draw = function() {
+    this.$.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    cam.upd();
+    this.rotObj.x += 0.1;
+    this.rotObj.y += 0.1;
+    this.rotObj.z += 0.1;
+
+    for (var i = 0; i < this.varr.length; i++) {
+      for (var val in this.calc[i]) {
+        if (this.calc[i].hasOwnProperty(val)) {
+          this.calc[i][val] += this.vel;
+          if (this.calc[i][val] > this.lim) this.calc[i][val] = 0;
+        }
+      }
+
+      this.varr[i].transIn.pos = {
+        x: this.diff * Math.cos(this.calc[i].x * Math.PI / 180),
+        y: this.diff * Math.sin(this.calc[i].y * Math.PI / 180),
+        z: this.diff * Math.sin(this.calc[i].z * Math.PI / 180)
+      };
+      this.varr[i].transIn.rot = this.rotObj;
+      this.varr[i].transIn.sz = this.objSz;
+      this.varr[i].vupd();
+      if (this.varr[i].transOut.p < 0) continue;
+      var g = this.$.createRadialGradient(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p, this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p*2);
+      this.$.globalCompositeOperation = 'lighter';
+       g.addColorStop(0, 'hsla(255, 255%, 255%, 1)');
+        g.addColorStop(.5, 'hsla('+(i+2)+',85%, 40%,1)');
+        g.addColorStop(1,'hsla('+(i)+',85%, 40%,.5)');
+        this.$.fillStyle = g;
+      this.$.beginPath();
+      this.$.arc(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p * 2, 0, Math.PI * 2, false);
+      this.$.fill();
+      this.$.closePath();
+    }
+  };
+  Build.prototype.anim = function() {
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        function(callback, element) {
+        window.setTimeout(callback, 1000 / 60);
+      };
+    })();
+    var anim = function() {
+      this.upd();
+      this.draw();
+      window.requestAnimationFrame(anim);
+    }.bind(this);
+    window.requestAnimationFrame(anim);
+  };
+
+  Build.prototype.run = function() {
+    this.anim();
+
+    window.addEventListener('mousemove', function(e) {
+      this.toX = (e.clientX - this.canvas.width / 2) * -0.8;
+      this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
+    }.bind(this));
+    window.addEventListener('touchmove',function(e){
+      e.preventDefault();
+      this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
+      this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
+    }.bind(this));
+    window.addEventListener('mousedown', function(e) {
+      for (var i = 0; i < 100; i++) {
+        this.add();
+      }
+    }.bind(this));
+    window.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      for (var i = 0; i < 100; i++) {
+        this.add();
+      }
+    }.bind(this));
+  };
+  var app = new Build();
+  app.run();
+})();
+window.addEventListener('resize',function(){
+ canvas.width = w = window.innerWidth;
+ canvas.height = h = window.innerHeight;
+}, false);
+
+</script>
+
 </body>
 </html>
