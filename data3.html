@@ -201,7 +201,8 @@ body {
             </div>
       
             <div class="air">
-              <div class="airtext">Wind<br>N/A</div>
+              <div class="airtext">Wind<br><div id="location" class="hidden">Loading...</div>
+        <div id="wind-speed" class="wind-speed">--</div></div>
                 <svg class="airsvg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" xml:space="preserve">  <image id="image0" width="30" height="30" x="0" y="0" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
                   AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABaFBMVEUAAAAA//8ilfIhlfMg
                   lvIglfMglvIeku8cjf8glvMhlfIflvMhlfIhlvIglvMhl/MglvIglfIglPEfmfIhlfIglvQfn/8g
@@ -366,6 +367,50 @@ body {
         }
 
         getAQI();
+    </script>
+  <script>
+        const city = 'Greater Noida'; // Replace with your desired city
+
+        async function getCoordinates(city) {
+            const geocodingUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${city}`;
+            const response = await fetch(geocodingUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            if (data.length === 0) {
+                throw new Error('City not found');
+            }
+            return {
+                lat: data[0].lat,
+                lon: data[0].lon
+            };
+        }
+
+        async function getWindSpeed(lat, lon) {
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+            const response = await fetch(weatherUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const windSpeed = data.current_weather.windspeed;
+            document.getElementById('location').innerText = `Location: ${city}`;
+            document.getElementById('wind-speed').innerText = `${windSpeed} km/h`;
+        }
+
+        async function fetchWindSpeedForCity(city) {
+            try {
+                const { lat, lon } = await getCoordinates(city);
+                await getWindSpeed(lat, lon);
+            } catch (error) {
+                document.getElementById('location').innerText = 'Error fetching wind speed data';
+                document.getElementById('wind-speed').innerText = '--';
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        fetchWindSpeedForCity(city);
     </script>
 
 </body>
