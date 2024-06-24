@@ -1,1 +1,2 @@
 This folder contains three images for the infopage
+resolution for each - 240x214
