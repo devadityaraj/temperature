@@ -355,7 +355,7 @@ body {
                     const aqi = data.data.aqi;
                     const cityName = data.data.city.name;
                     document.getElementById('location').innerText = `Location: ${cityName}`;
-                    document.getElementById('aqi').innerText = `AQI: ${aqi}`;
+                    document.getElementById('aqi').innerText = `${aqi}`;
                 } else {
                     document.getElementById('location').innerText = 'Error fetching AQI data';
                 }
