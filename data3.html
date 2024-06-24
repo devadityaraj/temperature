@@ -488,7 +488,7 @@ button {
         document.getElementById('pressure').innerText = `${pressure} hPa`;
     }
 
-    async function fetchPressureForCity(city) {
+    async function getPressure(city) {
         try {
             const { lat, lon } = await getCoordinates(city);
             await getPressure(lat, lon);
