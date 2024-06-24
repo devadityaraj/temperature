@@ -240,7 +240,7 @@ body {
                 NTowOToyNSswMDowMDWfkfAAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjMtMDItMThUMDU6MDk6
                 MjUrMDA6MDBiirAvAAAAAElFTkSuQmCC"></image>
               </svg>
-              <div class="aqitext">AQI<br>N/A</div>
+              <div class="aqitext">AQI<br><div id="aqi" class="aqi-value">--</div></div>
             </div>
       
             <div class="realfeel">
@@ -335,5 +335,34 @@ body {
    }
   fetchData();
  </script>
+      <script>
+        const apiKey = 'b1f18b3ccb66d936332d734b38e4bd8db07fb30c';
+        const city = 'Greater Noida';
+        const url = `https://api.waqi.info/feed/${city}/?token=${apiKey}`;
+
+        async function getAQI() {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                if (data.status === 'ok') {
+                    const aqi = data.data.aqi;
+                    const cityName = data.data.city.name;
+                    document.getElementById('location').innerText = `Location: ${cityName}`;
+                    document.getElementById('aqi').innerText = `AQI: ${aqi}`;
+                } else {
+                    document.getElementById('location').innerText = 'Error fetching AQI data';
+                }
+            } catch (error) {
+                document.getElementById('location').innerText = 'Error fetching AQI data';
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        getAQI();
+    </script>
+
 </body>
 </html>
