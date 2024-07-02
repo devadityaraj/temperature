@@ -128,5 +128,5 @@ void loop() {
     lcd.clear();
     lcd.print("Sensor error!");
       }
-  delay(1000); 
+  delay(1500); //DHT sensor provides sensor data per second, ensuring the better funconality and the accuracy of the sensor
 }
